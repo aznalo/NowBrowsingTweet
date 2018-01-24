@@ -1,0 +1,34 @@
+{  
+	"name": "NowBrowsingTweet",
+	"version": "1.0.0",
+	"manifest_version": 2,
+	"description": "Chrome Extension",
+	"icons": {
+		"16": "icons/icon16.png",
+		"48": "icons/icon48.png",
+		"128": "icons/icon128.png"
+	},
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"content_scripts": [
+		{
+			"matches": ["https://www.google.co.jp/*"],
+			"js": [
+				"bower_components/oauth-js/dist/oauth.js",
+				"bower_components/jquery/dist/jquery.js",
+				"main.js"
+			]
+		}
+	],
+	"externally_connectable": {
+		"matches": ["https://google.com/*"]
+	},
+	"browser_action": {
+		"default_icon": {
+			"19": "icons/icon19.png"
+		},
+		"default_popup": "popup.html"
+	}
+}
+
