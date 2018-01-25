@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script src="bower_components/oauth-js/dist/oauth.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{ message }}</h1>
+      <!-- <div v&#45;if="!(localStorage.getItem('oauth_token') &#38;&#38; localStorage.getItem('oauth_token_secret'))"> -->
+        <button v-on:click="login" >TwitterLogin!</button>
+      <!-- </div> -->
+      <!-- <div v&#45;else> -->
+      <!--   Logined! -->
+      <!--   {{ localStorage.getItem('oauth_token') }} -->
+      <!--   {{ localStorage.getItem('oauth_token_secret') }} -->
+      <!-- </div> -->
+    </div>
+  </body>
+  <script src="scripts/vue.js"></script>
+  <script src="scripts/base.js"></script>
+</html>
