@@ -15,8 +15,6 @@ class NowBrowssingTweet {
   }
 
   sendTwitter(text){
-    //以下POST先のURLの作成
-
     let options = {
       method: "POST",
       apiURL: "https://api.twitter.com/1.1/statuses/update.json",
@@ -31,7 +29,6 @@ class NowBrowssingTweet {
       tokenSecret: options.tokenSecret
     };
 
-    //parameterの値はちゃんとリファレンス読んで理解しないと書けないぜ
     let message = {
       method: options.method,
       action: options.apiURL,
@@ -45,21 +42,16 @@ class NowBrowssingTweet {
       }      
     };
 
-    //以下OAuth1は本来OAuthであるが先に書いた理由から改変
     OAuth1.setTimestampAndNonce(message);
     OAuth1.SignatureMethod.sign(message, accessor);
 
-    //ここでPOSTするURIを作成しています。
     let url = OAuth1.addToURL(message.action, message.parameters);
-
-    //GET_requestの場合、ヘッダドメイン名の回避が必要だがPOSTでは必要ない
-    //回避処理を書くとエラー吐かないのにPOSTできない泥沼
 
     console.log(options);
 
     $.ajax({
-      type: message.method,
       url: url,
+      type: message.method,
     });
   }
 
@@ -67,10 +59,21 @@ class NowBrowssingTweet {
     JSON.stringify(data);
   }
 
+  b64EncodeUnicode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+      function toSolidBytes(match, p1) {
+        return String.fromCharCode('0x' + p1);
+      }));
+  }
+
   main() {
-    let hoge = "Now Browssing to: " + this.title + "\n " + this.url; 
-    this.sendTwitter(hoge);
+    if ( this.token && this.token_secret){
+      let tweet_body = "Now Browssing to: " + this.title + "\n " + this.url; 
+      this.sendTwitter(tweet_body);
+    } else {
+      console.error("NowBrowssingTweet: Not Login");
     }
+  }
 
 }
 
@@ -100,7 +103,7 @@ Promise.all([
   token(),
   secret()
 ]).then(() => {
-  new NowBrowssingTweet( document.title, location.origin, token_key, secret_key).main();
+  new NowBrowssingTweet( document.title, `${location.href}` , token_key, secret_key).main();
 }).catch((e) => {
   console.log(e);
 });

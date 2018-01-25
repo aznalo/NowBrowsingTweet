@@ -13,10 +13,11 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["https://www.google.co.jp/*"],
+			"matches": ["http://*/*", "https://*/*"],
 			"js": [
 				"bower_components/oauth-js/dist/oauth.js",
 				"bower_components/jquery/dist/jquery.js",
+				"bower_components/jquery/dist/jquery.xdomainajax.js",
 				"scripts/sha1.js",
 				"scripts/oauth1.js",
 				"main.js"
