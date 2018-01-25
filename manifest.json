@@ -17,6 +17,8 @@
 			"js": [
 				"bower_components/oauth-js/dist/oauth.js",
 				"bower_components/jquery/dist/jquery.js",
+				"scripts/sha1.js",
+				"scripts/oauth1.js",
 				"main.js"
 			]
 		}

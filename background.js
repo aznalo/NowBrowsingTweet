@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
    sendResponse({data: localStorage.key(request.number)});
    break;
  case 'getItem': // 指定されたkeyの値を取得
-   // console.log({data: localStorage.getItem(request.key)});
+   console.log({data: localStorage.getItem(request.key)});
    sendResponse({data: localStorage.getItem(request.key)});
    break;
  case 'setItem': // 指定されたkeyと値を保存（更新）

@@ -9,6 +9,11 @@ var app = new Vue({
       let promise = new Promise( (resolve, reject) => {
         OAuth.popup('twitter',(err, res) => { //コールバック関数
           if (res) {
+            res.post('/1.1/statuses/update.json', {
+              data: {
+                status: "つかれた"
+              }
+            })
             resolve(res);
           } else {
             reject(err);
