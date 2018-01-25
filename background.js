@@ -1,44 +1,28 @@
-class NowBrowssingTweet {
-  constructor(title, url, data) {
-    this.title = document.title;
-    this.url = location.origin;
-    this.data = data;
+console.log("load");
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  console.log(request);
+  switch (request.method) {
+    case 'getLength': // 保存されているデータ数を取得
+      sendResponse({data: localStorage.length});
+      break;
+ case 'getKeyName': // 指定されたn番目のkey名を取得
+   sendResponse({data: localStorage.key(request.number)});
+   break;
+ case 'getItem': // 指定されたkeyの値を取得
+   // console.log({data: localStorage.getItem(request.key)});
+   sendResponse({data: localStorage.getItem(request.key)});
+   break;
+ case 'setItem': // 指定されたkeyと値を保存（更新）
+   sendResponse({data: localStorage.setItem(request.key, request.value)});
+   break;
+ case 'removeItem': // 指定されたkeyの値を削除
+   sendResponse({data: localStorage.removeItem[request.key]});
+   break;
+ case 'clearAll': //　すべてのデータを削除
+   sendResponse({data: localStorage.clear()});
+   break;
+ default:
+   console.log('no method');
+   break;
   }
-
-  printData(){
-    console.log("-----PrintData-----");
-    console.log("Token: " + localStorage.getItem("oauth_token"));
-    console.log("SecretToken: " + localStorage.getItem("oauth_token_secret"));
-  }
-
-  twitterOauth() {
-    console.log("oauth!");
-    OAuth.initialize('R04YFaHjJzCmUiRRHM_f8Y7Iq-A')
-    let promise = new Promise( (resolve, reject) => {
-      OAuth.popup('twitter',(err, res) => { //コールバック関数
-        console.log(res || err);
-        resolve(res)
-      });
-    });
-    promise.then( res => {
-      localStorage.setItem("oauth_token", res.oauth_token);
-      localStorage.setItem("oauth_token_secret", res.oauth_token_secret);
-      OAuth.callback('twitter',  "callback/url");
-    }).catch( err => {
-      console.error(err);
-    });
-
-  }
-
-  main() {
-    let hoge = "Now Browssing to: " + this.title + "\n " + this.url; 
-    alert(hoge);
-    // this.SendTwitter(hoge);
-  }
-
-}
-
-let app = new NowBrowssingTweet();
-//
-// app.printData();
-app.main()
+});
