@@ -27,6 +27,9 @@
 	"externally_connectable": {
 	    "matches": ["https://oauth.io/*"]
 	},
+	"permissions": [
+		"notifications"
+	],
 	"browser_action": {
 		"default_icon": {
 			"19": "icons/icon19.png"

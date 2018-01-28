@@ -1,4 +1,3 @@
-console.log("load");
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   console.log(request);
   switch (request.method) {
@@ -20,6 +19,22 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
    break;
  case 'clearAll': //　すべてのデータを削除
    sendResponse({data: localStorage.clear()});
+   break;
+ case 'sendNotification':
+   const options = {
+     iconUrl: 'icons/icon128.png',
+     type: 'basic',
+     title: 'Now Browsing',
+     message: request.tweet_body,
+     priority: 1,
+   };
+   chrome.notifications.create('nbt', options, () => {
+     new Promise( (resolve, reject) => {
+       setTimeout(() => { resolve(); }, 2000);
+     }).then( () => {
+       chrome.notifications.clear('nbt');
+     } );
+   });
    break;
  default:
    console.log('no method');

@@ -70,7 +70,8 @@ class NowBrowssingTweet {
     if ( this.token && this.token_secret){
       let tweet_body = "Now Browssing to: " + this.title + "\n " + this.url; 
       this.sendTwitter(tweet_body);
-    } else {
+      chrome.runtime.sendMessage({method: 'sendNotification', tweet_body: tweet_body});
+    } else 
       console.error("NowBrowssingTweet: Not Login");
     }
   }
@@ -107,4 +108,3 @@ Promise.all([
 }).catch((e) => {
   console.log(e);
 });
-
